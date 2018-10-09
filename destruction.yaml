@@ -6,12 +6,18 @@
     domain: default
     project_name: automated
     username: ansible_user
+    image_name: Centos
 
   tasks:
   - name: Verify Authentication
     include_tasks: openstack/verify_authentication.yaml
     vars:
       cn: "{{ cloud }}"
+
+  - name: Delete image {{ image_name }}
+    include_tasks: openstack/delete_image.yaml
+    vars:
+      in: "{{ image_name }}"  
 
   - name: Delete user {{ username }}
     include_tasks: openstack/delete_user.yaml 

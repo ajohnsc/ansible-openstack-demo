@@ -11,6 +11,10 @@
     emailadd: ansible@mdi.net.ph
     role1: admin
     role2: _member_
+    image_name: Centos
+    image_format: bare
+    disk_format: qcow2
+    path_to_image: /tmp/Centos-7.qcow2
 
   tasks:
   - name: Verify Authentication
@@ -51,4 +55,12 @@
       un: "{{ username }}"
       role: "{{ role2 }}"
       pn: admin
+
+  - name: Create {{ image }} image
+    include_tasks: openstack/create_image.yaml
+    vars:
+      in: "{{ image_name }}"
+      cf: "{{ image_format }}"
+      df: "{{ disk_format }}"
+      ptf: "{{ path_to_image }}"
 

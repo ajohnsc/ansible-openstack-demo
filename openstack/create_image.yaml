@@ -1,0 +1,9 @@
+# Create Image
+---
+- os_image:
+    name: "{{ in }}"
+    container_format: "{{ cf }}"
+    disk_format: "{{ df }}"
+    state: present
+    filename: "{{ ptf }}"
+

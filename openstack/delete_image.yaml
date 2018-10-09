@@ -1,0 +1,6 @@
+# Create Image
+---
+- os_image:
+    name: "{{ in }}"
+    state: absent
+
