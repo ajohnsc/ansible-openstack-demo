@@ -1,0 +1,6 @@
+# Remove project in ansible
+---
+- os_project:
+    name: "{{ pn }}"
+    cloud: "{{ cn }}"
+    state: absent

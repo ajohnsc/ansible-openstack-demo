@@ -1,0 +1,10 @@
+# Create a user
+---
+- os_user:
+    cloud: "{{ cn }}"
+    state: present
+    name: "{{ un }}"
+    password: "{{ pwd }}"
+    email: "{{ email }}"
+    domain: "{{ dom }}"
+    default_project: "{{ pn }}"

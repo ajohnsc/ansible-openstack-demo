@@ -1,0 +1,4 @@
+# Verify authentication key
+---
+- os_auth:
+    cloud: "{{ cn }}"

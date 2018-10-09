@@ -1,0 +1,6 @@
+# Delete a user
+---
+- os_user:
+    cloud: "{{ cn }}"
+    state: absent
+    name: "{{ un }}"

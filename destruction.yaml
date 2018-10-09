@@ -1,0 +1,27 @@
+---
+- name: "Automate deletion of Project in  OSP"
+  hosts: localhost
+  vars:
+    cloud: local
+    domain: default
+    project_name: automated
+    username: ansible_user
+
+  tasks:
+  - name: Verify Authentication
+    include_tasks: openstack/verify_authentication.yaml
+    vars:
+      cn: "{{ cloud }}"
+
+  - name: Delete user {{ username }}
+    include_tasks: openstack/delete_user.yaml 
+    vars:
+      cn: "{{ cloud }}"
+      un: "{{ username }}"
+
+  - name: Delete project {{ project_name }}
+    include_tasks: openstack/remove_project.yaml
+    vars:
+      pn: "{{ project_name }}"
+      cn: "{{ cloud }}"
+

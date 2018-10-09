@@ -1,0 +1,54 @@
+---
+- name: "Automate Creation of Project in  OSP"
+  hosts: localhost
+  vars:
+    cloud: local
+    domain: default
+    project_name: automated
+    project_description: "ansible managed project"
+    username: ansible_user
+    userpsk: ansible_password
+    emailadd: ansible@mdi.net.ph
+    role1: admin
+    role2: _member_
+
+  tasks:
+  - name: Verify Authentication
+    include_tasks: openstack/verify_authentication.yaml
+    vars:
+      cn: "{{ cloud }}"
+
+  - name: Create project {{ project_name }}
+    include_tasks: openstack/create_project.yaml
+    vars:
+      pn: "{{ project_name }}"
+      cn: "{{ cloud }}"
+      dom: "{{ domain }}"
+      desc: "{{ project_description }}"
+
+  - name: Create user {{ username }}
+    include_tasks: openstack/create_user.yaml 
+    vars:
+      cn: "{{ cloud }}"
+      dom: "{{ domain }}"
+      un: "{{ username }}"
+      pwd: "{{ userpsk }}"
+      pn: "{{ project_name }}"
+      email: "{{ emailadd }}"
+
+  - name: Grant {{ role1 }} to user {{ username }} in {{ project_name }}
+    include_tasks: openstack/grant_user.yaml
+    vars:
+      cn: "{{ cloud }}"
+      un: "{{ username }}"
+      role: "{{ role1 }}"
+      pn: "{{ project_name }}"
+
+  - name: Grant {{ role2 }} to user {{ username }} in admin
+    include_tasks: openstack/grant_user.yaml
+    vars:
+      cn: "{{ cloud }}"
+      un: "{{ username }}"
+      role: "{{ role2 }}"
+      pn: admin
+

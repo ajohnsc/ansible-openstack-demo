@@ -1,0 +1,9 @@
+# Create project in ansible
+---
+- os_project:
+    name: "{{ pn }}"
+    cloud: "{{ cn }}"
+    domain_id: "{{ dom }}"
+    description: "{{ desc }}"
+    enabled: True
+    state: present
