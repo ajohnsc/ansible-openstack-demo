@@ -1,0 +1,48 @@
+---
+- name: "Automate deletion of Project in  OSP"
+  hosts: localhost
+  vars:
+    cloud: local
+    domain: default
+    project_name: automated
+    username: ansible_user
+    internal_network: private
+    internal_subnet: private_subnet
+    router_name: router_public_private
+
+  tasks:
+  - name: Verify Authentication
+    include_tasks: openstack/verify_authentication.yaml
+    vars:
+      cn: "{{ cloud }}"
+  
+  - name: Delete router {{ router_name }}
+    include_tasks: openstack/delete_router.yaml
+    vars:
+      cn: "{{ cloud }}"
+      rn: "{{ router_name }}"
+
+  - name: Delete subnet {{ internal_subnet }}
+    include_tasks: openstack/delete_subnet.yaml
+    vars:
+      cn: "{{ cloud }}"
+      sn: "{{ internal_subnet }}"
+
+  - name: Delete network {{ internal_network }}
+    include_tasks: openstack/delete_network.yaml
+    vars:
+      cn: "{{ cloud }}"
+      nn: "{{ internal_network }}"
+
+  - name: Delete user {{ username }}
+    include_tasks: openstack/delete_user.yaml 
+    vars:
+      cn: "{{ cloud }}"
+      un: "{{ username }}"
+
+  - name: Delete project {{ project_name }}
+    include_tasks: openstack/delete_project.yaml
+    vars:
+      pn: "{{ project_name }}"
+      cn: "{{ cloud }}"
+

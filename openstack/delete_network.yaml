@@ -1,7 +1,6 @@
-# Create Network
+# Delete Network
 ---
 - os_network:
     cloud: "{{ cn }}"
-    state: present
+    state: absent
     name: "{{ nn }}"
-    project: "{{ pn }}"

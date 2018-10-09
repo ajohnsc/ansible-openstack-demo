@@ -1,6 +1,6 @@
 # Create Image
 ---
 - os_image:
-    name: "{{ in }}"
+    name: "{{ imn }}"
     state: absent
 

@@ -1,0 +1,6 @@
+# Delete subnet
+---
+- os_subnet:
+    state: absent
+    name: "{{ sn }}"
+    cloud: "{{ cn }}"

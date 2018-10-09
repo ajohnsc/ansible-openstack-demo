@@ -1,0 +1,6 @@
+# Delete Router
+---
+- os_router:
+    cloud: "{{ cn }}"
+    state: absent
+    name: "{{ rn }}"

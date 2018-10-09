@@ -11,10 +11,16 @@
     emailadd: ansible@mdi.net.ph
     role1: admin
     role2: _member_
-    image_name: Centos
-    image_format: bare
-    disk_format: qcow2
-    path_to_image: /tmp/Centos-7.qcow2
+    external_network: public
+    router_name: router_public_private
+    internal_network: private
+    external_subnet: public_subnet
+    internal_subnet: private_subnet
+    cidr_int: "192.168.0.0/24"
+    extip: 192.168.80.251
+    dns1_int: 8.8.8.8
+    dns2_int: 8.8.4.4
+
 
   tasks:
   - name: Verify Authentication
@@ -56,11 +62,31 @@
       role: "{{ role2 }}"
       pn: admin
 
-  - name: Create {{ image }} image
-    include_tasks: openstack/create_image.yaml
+  - name: Create network "{{ internal_network }}"
+    include_tasks: openstack/create_network.yaml
     vars:
-      in: "{{ image_name }}"
-      cf: "{{ image_format }}"
-      df: "{{ disk_format }}"
-      ptf: "{{ path_to_image }}"
+      cn: "{{ cloud }}"
+      nn: "{{ internal_network }}"
+      pn: "{{ project_name }}"
+
+  - name: Create subnet "{{ internal_subnet }}"
+    include_tasks: openstack/create_subnet.yaml
+    vars:
+      nn: "{{ internal_network }}"
+      cn: "{{ cloud }}"
+      sn: "{{ internal_subnet }}"
+      cidr: "{{ cidr_int }}"
+      dns1: "{{ dns1_int }}"
+      dns2: "{{ dns2_int }}"
+
+  - name: Create router {{ router_name }}
+    include_tasks: openstack/create_router.yaml
+    vars:
+      cn: "{{ cloud }}"
+      rn: "{{ router_name }}"
+      extnn: "{{ external_network }}"
+      extsn: "{{ external_subnet }}"
+      ext_ip: "{{ extip }}"
+      intsn: "{{ internal_subnet }}"
+
 

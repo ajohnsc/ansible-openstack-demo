@@ -1,0 +1,11 @@
+# Create subnet
+---
+- os_subnet:
+    state: present
+    network_name: "{{ nn }}"
+    name: "{{ sn }}"
+    cidr: "{{ cidr }}"
+    cloud: "{{ cn }}"
+    dns_nameservers:
+       - "{{ dns1 }}"
+       - "{{ dns2 }}"

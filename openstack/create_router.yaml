@@ -1,0 +1,12 @@
+# Create Router
+---
+- os_router:
+    cloud: "{{ cn }}"
+    state: present
+    name: "{{ rn }}"
+    network: "{{ extnn }}"
+    external_fixed_ips:
+      - subnet: "{{ extsn }}"
+        ip: "{{ ext_ip }}"
+    interfaces:
+      - "{{ intsn }}"
